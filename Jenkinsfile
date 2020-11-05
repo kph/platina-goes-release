@@ -16,6 +16,7 @@ pipeline {
 	stage('Pre-clean') {
 	    steps {
 		sh 'make clean'
+		sh 'rm -rf worktrees/*/linux worktrees/*/u-boot'
 	    }
 	}
 	stage('Checkout') {
