@@ -37,7 +37,7 @@ This build is presently referred in Aptly as stretch. This was created
 in aptly by doing:
 
 ```console
-aptly repo create -distribution=buster -component=main platina-stretch
+aptly repo create -distribution=stretch -component=main platina-stretch-stable
 ```
 
 **Do not execute this command. I already did it. It'll probably give you an
@@ -47,7 +47,7 @@ Assuming you have downloaded the ZIP archive into an empty directory,
 the following command will add the new archive into the repository:
 
 ```console
-aptly repo add platina-stretch *.deb
+aptly repo add platina-stretch-stable *.deb
 ```
 
 You will get some errors about duplicate packages. This means that the package
@@ -69,28 +69,27 @@ aptly snapshot list
 ```
 
 Will show you all of the current snapshots. These releases are based on
-version numbers like 2.2~alpha.XXX - find the latest XXX and use one
-more than that. Or switch to beta, or just versions like 2.2 for a
-release.
+version numbers like 2.1.XXX - find the latest XXX and use one
+more than that. Or switch to alpha or beta using 2.1~beta.9.
 
-As of this writing, the latest published version is 2.2~alpha.6.
+As of this writing, the latest published version is 2.1.13.
 
 To create the next alpha snapshot, do:
 
 ```console
-aptly snapshot create platina-stretch-2.2~alpha.7 from repo platina-stretch
+aptly snapshot create platina-stretch-stable-2.1.14 from repo platina-stretch-stable
 ```
 
 Once the new snapshot is created, unpublish what is there:
 
 ```console
-aptly publish drop stretch
+aptly publish drop stretch-stable
 ```
 
 Publish the new snapshot:
 
 ```console
-aptly publish snapshot platina-stretch-2.2~alpha.7
+aptly publish snapshot platina-stretch-stable-2.1.14
 ```
 
 You will be asked to sign the release with your gpg key.
@@ -118,7 +117,7 @@ Debian packaging rules require APT source packages end with the string
 If these packages change, you will need to update the versions at the top
 of the debian distribution on `platina.io:/srv/goes/debian`. The names
 of this are `platina-apt-source_stretch.deb` and
-`platina-archive-keyring-stretchyy.deb`.
+`platina-archive-keyring-stretch.deb`.
 
 # Publishing new recovery versions of goes-boot
 
