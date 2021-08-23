@@ -1,17 +1,18 @@
 # platina-goes-release
-This is the 2.2 release branch for Platina Go-ES. This release targets
-Debian 10 (Buster).
+This is the 2.1 release branch for Platina Go-ES. This release targets
+Debian 9 (Stretch).
 
 # About this release
 
-The release build is done in a controlled environment created in `Dockerfile`.
-This environment is used to ensure that we are building with the proper
-tools and libraries.
+This release must be built on a Debian 9 (Stretch) system with certain
+packages installed. Currently, platina4 is the only host where this
+package can be built. `Jenkinsfile` contains declarations to ensure
+that this is the case.
 
-The file `clone-github` in this directory is a shell script which does git
-shallow clones of each of the build directories. You must edit this script
-to add new packages, and to change which branch (or tag) is used to build
-that package.
+The build directories of the packages to be built are added as git
+submodules. Update the package in a subdirectory of this project, and
+then add the changed subprojects into the superproject. **Be sure to commit
+your changes to the superproject.**
 
 # Downloading build artifacts
 
@@ -32,11 +33,11 @@ start with a fresh Aptly repository, as you will have to re-add all of the
 releases, which introduces the possiblity of breaking APT on our client systems
 if there are any packages which have the same name but different contents.
 
-This build is presently referred in Aptly as buster-unstable. This was created
+This build is presently referred in Aptly as stretch. This was created
 in aptly by doing:
 
 ```console
-aptly repo create -distribution=buster -component=main platina-buster-unstable
+aptly repo create -distribution=buster -component=main platina-stretch
 ```
 
 **Do not execute this command. I already did it. It'll probably give you an
@@ -46,7 +47,7 @@ Assuming you have downloaded the ZIP archive into an empty directory,
 the following command will add the new archive into the repository:
 
 ```console
-aptly repo add platina-buster-unstable *.deb
+aptly repo add platina-stretch *.deb
 ```
 
 You will get some errors about duplicate packages. This means that the package
@@ -77,19 +78,19 @@ As of this writing, the latest published version is 2.2~alpha.6.
 To create the next alpha snapshot, do:
 
 ```console
-aptly snapshot create platina-buster-unstable-2.2~alpha.7 from repo platina-buster-unstable
+aptly snapshot create platina-stretch-2.2~alpha.7 from repo platina-stretch
 ```
 
 Once the new snapshot is created, unpublish what is there:
 
 ```console
-aptly publish drop buster-unstable
+aptly publish drop stretch
 ```
 
 Publish the new snapshot:
 
 ```console
-aptly publish snapshot platina-buster-unstable-2.2~alpha.7
+aptly publish snapshot platina-stretch-2.2~alpha.7
 ```
 
 You will be asked to sign the release with your gpg key.
@@ -116,8 +117,8 @@ Debian packaging rules require APT source packages end with the string
 
 If these packages change, you will need to update the versions at the top
 of the debian distribution on `platina.io:/srv/goes/debian`. The names
-of this are `platina-apt-source_buster-unstable.deb` and
-`platina-archive-keyring-buster-unstable.deb`.
+of this are `platina-apt-source_stretch.deb` and
+`platina-archive-keyring-stretchyy.deb`.
 
 # Publishing new recovery versions of goes-boot
 
